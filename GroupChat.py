@@ -7,12 +7,15 @@ from dotenv import load_dotenv
 # Load the environment variables from dev.env
 load_dotenv("dev.env")
 ##other model is gpt-3.5-turbo-16k-0613
-config_list = [
-    {
-        'model':'gpt-4',
-        'api_key': os.getenv("API_KEY")
+config_list = autogen.config_list_from_json(
+        env_or_file="OAI_CONFIG_LIST",
+    file_location=".",
+    filter_dict={
+        "model": {
+            "gpt-3.5-turbo-16k",
+        }
     }
-]
+)
 
 llm_config={
     "request_timeout": 600,
