@@ -6,13 +6,26 @@ from dotenv import load_dotenv
 
 # Load the environment variables from dev.env
 load_dotenv("dev.env")
-
-config_list = [
-    {
-        'model':'gpt-4',
-        'api_key': os.getenv("API_KEY")
+##other model is gpt-3.5-turbo-16k-0613
+config_list = autogen.config_list_from_json(
+        env_or_file="OAI_CONFIG_LIST",
+    file_location=".",
+    filter_dict={
+        "model": {
+            "gpt-4",
+            "gpt4",
+            "gpt-4-32k",
+            "gpt-4-32k-0314",
+            "gpt-4-32k-v0314",
+            "gpt-3.5-turbo",
+            "gpt-3.5-turbo-16k",
+            "gpt-3.5-turbo-0301",
+            "chatgpt-35-turbo-0301",
+            "gpt-35-turbo-v0301",
+            "gpt",
+        }
     }
-]
+)
 
 llm_config={
     "request_timeout": 600,
@@ -38,18 +51,10 @@ user_proxy = autogen.UserProxyAgent(
 )
 
 task = """
-Generate code that draws a picture of hatsune miku
+Generate code that prints numbers 1 to 100
 """
 
 user_proxy.initiate_chat(
     assistant,
     message=task
 )
-# task2 = """
-# Change the code in the file you just created to instead output numbers 1 to 200
-# """
-
-# user_proxy.initiate_chat(
-#     assistant,
-#     message=task2
-# )
